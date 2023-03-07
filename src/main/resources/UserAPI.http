@@ -1,0 +1,15 @@
+GET http://localhost:8081/users/2
+Accept: application/json
+
+###
+POST http://localhost:8081/users
+Content-Type: application/json
+
+{
+  "username": "issam",
+  "email": "email@test.com",
+  "password": "123456",
+  "role": "ADMIN"
+}
+
+###

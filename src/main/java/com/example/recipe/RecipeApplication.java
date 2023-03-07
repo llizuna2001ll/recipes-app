@@ -22,7 +22,7 @@ public class RecipeApplication {
         SpringApplication.run(RecipeApplication.class, args);
     }
 
-    @Bean
+    /*@Bean
     public CommandLineRunner commandLineRunner(UserRepository userRepository, CategorieRepository categorieRepository,
                                                RecipeRepository recipeRepository, RepositoryRestConfiguration restConfiguration){
         return args -> {
@@ -49,6 +49,6 @@ public class RecipeApplication {
             );
 
         };
-    }
+    }*/
 
 }

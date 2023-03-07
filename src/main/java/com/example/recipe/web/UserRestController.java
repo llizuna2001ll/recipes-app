@@ -2,28 +2,52 @@ package com.example.recipe.web;
 
 import com.example.recipe.entities.User;
 import com.example.recipe.repositories.UserRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.recipe.service.UserService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/users")
 public class UserRestController {
 
-    private UserRepository userRepository;
+    private UserService userService;
 
-    @GetMapping("/users")
-    public List<User> users(){
-        return userRepository.findAll();
+    public UserRestController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @GetMapping
+    ResponseEntity<List<User>> getAllUsers(){
+        List<User> users = userService.findAllUsers();
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @GetMapping("/users/{id}")
-    public User getUser(@PathVariable Long id){
-        return userRepository.findById(id).
-                orElseThrow(() -> new RuntimeException("User not found"));
+    ResponseEntity<User> getUserById(@PathVariable Long id){
+        User user = userService.findUserById(id);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @PostMapping("/addUser")
+    ResponseEntity<User> addEmployee(@RequestBody User user){
+        User newUser = userService.addUser(user);
+        return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
 
 
+    @PutMapping("/updateUser")
+    ResponseEntity<User> updateEmployee(@RequestBody User user){
+        User updateUser = userService.updateUser(user);
+        return new ResponseEntity<>(updateUser, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/deleteUser/{id}")
+    ResponseEntity<User> deleteEmployee(@PathVariable("id") Long id){
+        userService.deleteUserById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 }

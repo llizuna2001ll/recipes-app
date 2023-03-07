@@ -13,10 +13,13 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Category {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String categorieName;
-    @OneToMany(mappedBy = "category")
+    private String categoryName;
+    @ManyToMany
+    @JoinTable(name= "recipe_category",
+    joinColumns = @JoinColumn(name="category_id"),
+    inverseJoinColumns = @JoinColumn(name = "recipe_id"))
     private List<Recipe> recipes;
 
     public Long getToTal(){
